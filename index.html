@@ -1,27 +1,180 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的第二个站点</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-      max-width: 640px;
-      margin: 20vh auto;
-      padding: 0 24px;
-      text-align: center;
-      color: #333;
-      background: #fafafa;
-    }
-    h1 { font-weight: 600; font-size: 1.8rem; }
-    p { color: #888; line-height: 1.7; }
-    code { background: #eee; padding: 2px 6px; border-radius: 4px; font-size: .9em; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>how2livebetter.net 像素级复刻 · 交付展示</title>
+<style>
+  :root{
+    --bg:#faf9f6; --surface:#fff; --recess:#f7f6f2; --border:#e7e5df;
+    --main:#1c1917; --body:#57534e; --muted:#78716c; --faint:#a8a29e;
+    --sage:#15803d; --sage-deep:#166534; --sage-soft:#dcfce7;
+    --max:1080px; --radius:12px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--body); line-height:1.7; margin:0;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:Georgia,"Newsreader","Noto Serif SC",serif; color:var(--main); font-weight:600;}
+  a{color:var(--sage-deep);}
+
+  /* Hero */
+  header.hero{padding:64px 24px 40px; text-align:center; border-bottom:1px solid var(--border);}
+  header.hero .eyebrow{font-family:"JetBrains Mono",ui-monospace,monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--sage);}
+  header.hero h1{font-size:2.4rem; line-height:1.25; margin:14px 0 10px;}
+  header.hero p.lede{font-size:1.05rem; color:var(--body); max-width:640px; margin:0 auto 22px;}
+  .cta{display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;}
+  .btn{display:inline-block; padding:11px 20px; border-radius:10px; font-size:.95rem; text-decoration:none; font-weight:500;}
+  .btn-primary{background:var(--sage); color:#fff;}
+  .btn-primary:hover{background:var(--sage-deep);}
+  .btn-secondary{background:var(--surface); color:var(--main); border:1px solid var(--border);}
+  .btn-secondary:hover{border-color:var(--main);}
+
+  /* Metrics */
+  .metrics{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:40px 0 8px;}
+  .metric{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px 16px; text-align:center;}
+  .metric .num{font-family:Georgia,serif; font-size:1.7rem; color:var(--sage-deep); font-weight:600; line-height:1.1;}
+  .metric .label{font-size:.82rem; color:var(--muted); margin-top:6px;}
+
+  /* Sections */
+  section{padding:48px 0; border-bottom:1px solid var(--border);}
+  section h2{font-size:1.7rem; margin:0 0 6px;}
+  section .sub{color:var(--muted); font-size:.92rem; margin:0 0 26px;}
+
+  /* Comparison 2-up */
+  .pair{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:26px;}
+  .pair .cap{grid-column:1/-1; font-family:"JetBrains Mono",monospace; font-size:.8rem; color:var(--muted); text-transform:uppercase; letter-spacing:.04em; margin-bottom:-6px;}
+  figure{margin:0; background:var(--recess); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden;}
+  figure .tag{display:block; font-size:.78rem; color:var(--faint); padding:8px 12px; border-bottom:1px solid var(--border); background:var(--surface);}
+  figure .tag b{color:var(--body); font-weight:600;}
+  figure img{display:block; width:100%; height:auto; cursor:zoom-in; background:#fff;}
+
+  /* Gallery grid */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px;}
+
+  /* Disclosure */
+  .disclosure{background:var(--recess); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px; font-size:.9rem; color:var(--muted);}
+  .disclosure b{color:var(--main);}
+
+  footer{padding:40px 24px 64px; text-align:center; color:var(--faint); font-size:.85rem;}
+
+  /* Lightbox */
+  #lb{position:fixed; inset:0; background:rgba(20,18,16,.92); display:none; align-items:center; justify-content:center; z-index:50; padding:24px; cursor:zoom-out;}
+  #lb.open{display:flex;}
+  #lb img{max-width:100%; max-height:100%; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  #lb .close{position:absolute; top:18px; right:22px; color:#fff; font-size:1.6rem; cursor:pointer; user-select:none;}
+
+  @media(max-width:640px){ .pair{grid-template-columns:1fr;} header.hero h1{font-size:1.9rem;} }
+</style>
 </head>
 <body>
-  <h1>🚧 站点建设中</h1>
-  <p>这是 <strong>Hua2026-ai</strong> 的第二个 GitHub Pages 项目页（空壳）。</p>
-  <p>地址：<code>hua2026-ai.github.io/my-site/</code> —— 内容待定，部署链路已就绪。</p>
+
+<header class="hero">
+  <div class="eyebrow">AI Coding Agent · 像素级网站复刻</div>
+  <h1>how2livebetter.net 首页克隆<br>交付展示</h1>
+  <p class="lede">用 AI Coding Agent 把「高性价比人生指南」首页从零复刻为干净代码，并逐像素比对验证还原度。下方为源站 / 克隆对照、像素 Diff 与 3× 放大证据。</p>
+  <div class="cta">
+    <a class="btn btn-primary" href="./brief.html">查看完整页面简报 →</a>
+    <a class="btn btn-secondary" href="https://how2livebetter.net/" target="_blank" rel="noopener">访问源站 ↗</a>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="metrics">
+    <div class="metric"><div class="num">≤0.033%</div><div class="label">像素 Diff</div></div>
+    <div class="metric"><div class="num">243/243</div><div class="label">文本节点一致</div></div>
+    <div class="metric"><div class="num">8/8</div><div class="label">交互冒烟通过</div></div>
+    <div class="metric"><div class="num">4 族</div><div class="label">字体自托管</div></div>
+    <div class="metric"><div class="num">320–1920</div><div class="label">无横向溢出</div></div>
+  </div>
+
+  <section>
+    <h2>① 源站 ↔ 克隆 对照</h2>
+    <p class="sub">同一视口下，左为源站截图，右为克隆产物截图。亮色 / 暗色 / 移动端 / 桌面折叠态全覆盖。</p>
+
+    <div class="pair">
+      <div class="cap">桌面 · 亮色（1440px）</div>
+      <figure><span class="tag"><b>源站</b> source-desktop</span><img loading="lazy" src="assets/design-references/source-desktop.png" alt="源站桌面亮色"></figure>
+      <figure><span class="tag"><b>克隆</b> clone-desktop</span><img loading="lazy" src="assets/design-references/clone-desktop.png" alt="克隆桌面亮色"></figure>
+    </div>
+
+    <div class="pair">
+      <div class="cap">桌面 · 暗色</div>
+      <figure><span class="tag"><b>源站</b> source-desktop-dark</span><img loading="lazy" src="assets/design-references/source-desktop-dark.png" alt="源站桌面暗色"></figure>
+      <figure><span class="tag"><b>克隆</b> clone-desktop-dark</span><img loading="lazy" src="assets/design-references/clone-desktop-dark.png" alt="克隆桌面暗色"></figure>
+    </div>
+
+    <div class="pair">
+      <div class="cap">移动 · 亮色（375px）</div>
+      <figure><span class="tag"><b>源站</b> source-mobile</span><img loading="lazy" src="assets/design-references/source-mobile.png" alt="源站移动亮色"></figure>
+      <figure><span class="tag"><b>克隆</b> clone-mobile</span><img loading="lazy" src="assets/design-references/clone-mobile.png" alt="克隆移动亮色"></figure>
+    </div>
+
+    <div class="pair">
+      <div class="cap">移动 · 暗色</div>
+      <figure><span class="tag"><b>源站</b> source-mobile-dark</span><img loading="lazy" src="assets/design-references/source-mobile-dark.png" alt="源站移动暗色"></figure>
+      <figure><span class="tag"><b>克隆</b> clone-mobile-dark</span><img loading="lazy" src="assets/design-references/clone-mobile-dark.png" alt="克隆移动暗色"></figure>
+    </div>
+
+    <div class="pair">
+      <div class="cap">桌面 · 折叠态（导航下拉展开）</div>
+      <figure><span class="tag"><b>源站</b> source-desktop-fold</span><img loading="lazy" src="assets/design-references/source-desktop-fold.png" alt="源站桌面折叠"></figure>
+      <figure><span class="tag"><b>克隆</b> clone-desktop-fold</span><img loading="lazy" src="assets/design-references/clone-desktop-fold.png" alt="克隆桌面折叠"></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>② 像素 Diff 叠图</h2>
+    <p class="sub">源站与克隆逐像素差值图：越暗表示差异越小。四张覆盖亮色 / 暗色 / 移动各态，整体近乎全黑即还原度极高。</p>
+    <div class="grid">
+      <figure><span class="tag"><b>桌面亮色</b> diff-desktop</span><img loading="lazy" src="assets/design-references/diff-desktop.png" alt="diff 桌面亮色"></figure>
+      <figure><span class="tag"><b>桌面暗色</b> diff-desktop-dark</span><img loading="lazy" src="assets/design-references/diff-desktop-dark.png" alt="diff 桌面暗色"></figure>
+      <figure><span class="tag"><b>移动亮色</b> diff-mobile</span><img loading="lazy" src="assets/design-references/diff-mobile.png" alt="diff 移动亮色"></figure>
+      <figure><span class="tag"><b>移动暗色</b> diff-mobile-dark</span><img loading="lazy" src="assets/design-references/diff-mobile-dark.png" alt="diff 移动暗色"></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>③ 3× 放大证据</h2>
+    <p class="sub">局部 3 倍放大，验证字体渲染、间距与 SVG 着色的逐像素一致性。左为源站，右为克隆。</p>
+    <div class="pair">
+      <div class="cap">D885 区段（band）</div>
+      <figure><span class="tag"><b>源站</b> z3-src-d885-band</span><img loading="lazy" src="assets/design-references/z3-src-d885-band.png" alt="源站 3x band"></figure>
+      <figure><span class="tag"><b>克隆</b> z3-clone-d885-band</span><img loading="lazy" src="assets/design-references/z3-clone-d885-band.png" alt="克隆 3x band"></figure>
+    </div>
+    <div class="pair">
+      <div class="cap">colophon 区段</div>
+      <figure><span class="tag"><b>源站</b> z4-src-colophon</span><img loading="lazy" src="assets/design-references/z4-src-colophon.png" alt="源站 3x colophon"></figure>
+      <figure><span class="tag"><b>克隆</b> z4-clone-colophon</span><img loading="lazy" src="assets/design-references/z4-clone-colophon.png" alt="克隆 3x colophon"></figure>
+    </div>
+  </section>
+
+  <section style="border-bottom:none;">
+    <h2>说明与披露</h2>
+    <div class="disclosure">
+      <p>本页为<strong>非商业的技术复刻案例研究</strong>，用于展示 AI Coding Agent 的网站还原能力。克隆仅覆盖首页，站内其余链接（阶段页 / 手册 / 工具等）均保留指向 <b>源站 how2livebetter.net</b> 的同窗口跳转。</p>
+      <p>克隆不含源站的任何第三方追踪脚本（Google Analytics / AdSense / Consent Mode v2）；字体经 <code>next/font</code> 自托管，与源站同字体同字重，零外部字体请求。完整技术方案、设计 Token、区块测量与响应式断点见 <a href="./brief.html">《页面简报》</a>。</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  由 AI Coding Agent 生成 · 交付展示页托管于 GitHub Pages · 图片与数据均来自本地复刻验证产物
+</footer>
+
+<div id="lb"><span class="close">&times;</span><img id="lbimg" src="" alt="放大查看"></div>
+<script>
+  const lb=document.getElementById('lb'), lbimg=document.getElementById('lbimg');
+  document.querySelectorAll('figure img').forEach(im=>{
+    im.addEventListener('click',()=>{ lbimg.src=im.src; lb.classList.add('open'); });
+  });
+  lb.addEventListener('click',()=>lb.classList.remove('open'));
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') lb.classList.remove('open'); });
+</script>
+
 </body>
 </html>
